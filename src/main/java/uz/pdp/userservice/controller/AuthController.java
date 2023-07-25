@@ -1,7 +1,10 @@
 package uz.pdp.userservice.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.userservice.domain.dto.LoginRequestDto;
 import uz.pdp.userservice.domain.dto.UserRequestDto;
 import uz.pdp.userservice.domain.dto.response.JwtResponse;
 import uz.pdp.userservice.domain.entity.user.UserEntity;
@@ -35,10 +38,9 @@ public class AuthController {
 //        return id.toString();
         return userService.verifyUser(id, code);
     }
-
     @GetMapping("/login")
-    public JwtResponse login(@RequestParam String email, @RequestParam String password) {
-        return userService.login(email, password);
+    public ResponseEntity<JwtResponse> login(@RequestBody @Valid LoginRequestDto loginDto) {
+        return ResponseEntity.ok(userService.login(loginDto));
     }
 
 

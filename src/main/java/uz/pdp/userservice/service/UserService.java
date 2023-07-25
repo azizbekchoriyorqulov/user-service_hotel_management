@@ -1,11 +1,12 @@
 package uz.pdp.userservice.service;
 
-import jakarta.ws.rs.BadRequestException;
+
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import uz.pdp.userservice.domain.dto.LoginRequestDto;
 import uz.pdp.userservice.domain.dto.UserRequestDto;
 import uz.pdp.userservice.domain.dto.response.JwtResponse;
 import uz.pdp.userservice.domain.entity.user.PermissionEntity;
@@ -53,15 +54,19 @@ public class UserService {
         return userEntity;
     }
 
-    public JwtResponse login(String email, String password) {
-        UserEntity user = userRepository.findByEmail(email)
+    public JwtResponse login(LoginRequestDto loginDto) {
+        UserEntity user = userRepository.findByEmail(loginDto.getEmail())
                 .orElseThrow(() -> new DataNotFoundException("user not found"));
-
-        if(passwordEncoder.matches(user.getPassword(), password)) {
-            return new JwtResponse(jwtService.generateAccessToken(user));
+      if(user.getState()==UserState.BLOCKED){
+          throw new AuthenticationFailedException("Your account has blocked");
+      }
+        if (passwordEncoder.matches(loginDto.getPassword(), user.getPassword())) {
+            return JwtResponse.builder()
+                    .accessToken(jwtService.generateAccessToken(user))
+                    .refreshToken(jwtService.generateRefreshToken(user))
+                    .build();
         }
-
-        throw new AuthenticationFailedException("wrong password or email");
+        throw new AuthenticationFailedException("Authentication failed Please check your email or password");
     }
 
     private String generateVerificationCode() {
