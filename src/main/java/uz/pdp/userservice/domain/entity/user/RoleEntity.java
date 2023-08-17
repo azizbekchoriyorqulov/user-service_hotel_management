@@ -1,5 +1,7 @@
 package uz.pdp.userservice.domain.entity.user;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
@@ -16,8 +18,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleEntity extends BaseEntity {
+    @Column(unique = true)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<PermissionEntity> permissions;
 }
