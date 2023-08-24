@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface PermissionRepository extends JpaRepository<PermissionEntity, UUID> {
     List<PermissionEntity> findPermissionEntitiesByPermissionIn(List<String> permissions);
+    PermissionEntity findPermissionEntitiesById(UUID id);
 }
