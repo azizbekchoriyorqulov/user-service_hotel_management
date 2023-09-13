@@ -1,6 +1,5 @@
 package uz.pdp.userservice.service;
 
-import jakarta.ws.rs.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,10 +53,9 @@ public class UserService {
     }
 
     public JwtResponse login(String email, String password) {
-        UserEntity user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new DataNotFoundException("user not found"));
+        UserEntity user = userRepository.findByEmail(email).orElseThrow(() -> new DataNotFoundException("user not found"));
 
-        if(passwordEncoder.matches(user.getPassword(), password)) {
+        if(passwordEncoder.matches(password,user.getPassword())) {
             return new JwtResponse(jwtService.generateAccessToken(user));
         }
 

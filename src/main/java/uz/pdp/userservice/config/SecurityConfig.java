@@ -27,7 +27,7 @@ public class SecurityConfig {
     private final AuthService auth;
     private final JwtService jwtService;
     private final String[] usersOnly = {"/user/"};
-    private final String[] permitALl = {"/user/auth/"};
+    private final String[] permitALl = {"/user/auth/*"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http

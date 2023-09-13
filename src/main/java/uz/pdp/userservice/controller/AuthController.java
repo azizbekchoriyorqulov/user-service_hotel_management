@@ -2,6 +2,7 @@ package uz.pdp.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import uz.pdp.userservice.domain.dto.LoginDto;
 import uz.pdp.userservice.domain.dto.UserRequestDto;
 import uz.pdp.userservice.domain.dto.response.JwtResponse;
 import uz.pdp.userservice.domain.entity.user.UserEntity;
@@ -37,8 +38,10 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    public JwtResponse login(@RequestParam String email, @RequestParam String password) {
-        return userService.login(email, password);
+    public JwtResponse login(
+            @RequestBody LoginDto loginDto
+    ) {
+        return userService.login(loginDto.getEmail(), loginDto.getPassword());
     }
 
 
