@@ -7,20 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.pdp.userservice.domain.dto.UserRequestDto;
 import uz.pdp.userservice.domain.dto.response.JwtResponse;
-import uz.pdp.userservice.domain.entity.user.RoleEntity;
 import uz.pdp.userservice.domain.entity.user.UserEntity;
 import uz.pdp.userservice.domain.entity.user.UserState;
 import uz.pdp.userservice.exception.AuthenticationFailedException;
 import uz.pdp.userservice.exception.DataNotFoundException;
 import uz.pdp.userservice.exception.OneTimeCodeVerificationException;
 import uz.pdp.userservice.exception.UserBadRequestException;
-import uz.pdp.userservice.repository.PermissionRepository;
-import uz.pdp.userservice.repository.RoleRepository;
 import uz.pdp.userservice.repository.UserRepository;
 import uz.pdp.userservice.service.auth.JwtService;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
@@ -30,8 +26,6 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
-    private final PermissionRepository permissionRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
@@ -71,10 +65,6 @@ public class UserService {
         }
     }
 
-
-    private List<RoleEntity> getRolesFromStrings(List<String> roles) {
-        return roleRepository.findRoleEntitiesByNameIn(roles);
-    }
 
     public String verifyUser(UUID id, String code) {
         UserEntity userEntity = userRepository.findById(id)
