@@ -26,11 +26,9 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany
-    private List<RoleEntity> roles;
+    @Enumerated(EnumType.STRING)
+    private RoleEntity role = RoleEntity.USER;
 
-    @ManyToMany
-    private List<PermissionEntity> permissions;
 
     @Enumerated(EnumType.STRING)
     private UserState state;
@@ -39,13 +37,7 @@ public class UserEntity extends BaseEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-
-        roles.forEach((role) -> {
-            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName()));
-        });
-
-        permissions.forEach((permission) -> authorities.add(new SimpleGrantedAuthority(permission.getPermission())));
-
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role.name()));
         return authorities;
     }
 
