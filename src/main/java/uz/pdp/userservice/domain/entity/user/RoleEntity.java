@@ -10,14 +10,7 @@ import uz.pdp.userservice.domain.entity.BaseEntity;
 
 import java.util.List;
 
-@Entity(name = "role")
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class RoleEntity extends BaseEntity {
-    private String name;
 
-    @ManyToMany
-    private List<PermissionEntity> permissions;
+public enum RoleEntity  {
+        USER, ADMIN, SUPER_ADMIN, MANAGER;
 }

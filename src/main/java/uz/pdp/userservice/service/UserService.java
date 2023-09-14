@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.pdp.userservice.domain.dto.UserRequestDto;
 import uz.pdp.userservice.domain.dto.response.JwtResponse;
-import uz.pdp.userservice.domain.entity.user.PermissionEntity;
 import uz.pdp.userservice.domain.entity.user.RoleEntity;
 import uz.pdp.userservice.domain.entity.user.UserEntity;
 import uz.pdp.userservice.domain.entity.user.UserState;
@@ -72,9 +71,6 @@ public class UserService {
         }
     }
 
-    private List<PermissionEntity> getPermissionsFromStrings(List<String> permissions) {
-        return permissionRepository.findPermissionEntitiesByPermissionIn(permissions);
-    }
 
     private List<RoleEntity> getRolesFromStrings(List<String> roles) {
         return roleRepository.findRoleEntitiesByNameIn(roles);

@@ -5,9 +5,9 @@ spring:
   application:
     name: USER-SERVICE
   datasource:
-    username: doadmin
-    password: AVNS_Ab_9vF8e1DIuNhU--Za
-    url: jdbc:postgresql://db-hotel-do-user-14565222-0.b.db.ondigitalocean.com:25060/defaultdb
+    username: postgres
+    password: 1999
+    url: jdbc:postgresql://localhost:5432/user_service_db
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -16,7 +16,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQL94Dialect
 
-host: ${HOST:http://209.97.190.88}
+host: ${HOST:http://localhost}
 services:
   notification-url: ${NOTIFICATION_URL:http://NOTIFICATION-SERVICE/notification}
 
@@ -25,7 +25,7 @@ services:
 eureka:
   client:
     service-url:
-      defaultUrl: ${EUREKA_URI:http://209.97.190.88:8761/eureka/}
+      defaultUrl: ${EUREKA_URI:http://localhost:8761/eureka/}
     instance:
       preferIpAddress: true
 
