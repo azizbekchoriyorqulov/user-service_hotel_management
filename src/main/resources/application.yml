@@ -5,9 +5,9 @@ spring:
   application:
     name: USER-SERVICE
   datasource:
-    username: postgres
-    password: 1999
-    url: jdbc:postgresql://localhost:5432/user_service_db
+    username: doadmin
+    password: AVNS_Ab_9vF8e1DIuNhU--Za
+    url: jdbc:postgresql://db-hotel-do-user-14565222-0.b.db.ondigitalocean.com:25060/defaultdb
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
